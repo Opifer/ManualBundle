@@ -1,0 +1,24 @@
+{% extends "OpiferCmsBundle::base.html.twig" %}
+
+{% block title %}Help - {{ article.title }} :: OpiferCMS{% endblock %}
+
+{% block body %}
+    <div class="manual container">
+        <div class="row">
+            <article class="col-xs-8 col-xs-offset-2">
+                    <header>
+                        <h1 class="help-title">{{ article.title }}</h1>
+                        <ol class="breadcrumb">
+                            <li><a href="{{  path('opifer.manual.help.index') }}">{{ article.category.title }}</a></li>
+                            <li class="active">{{ article.title }}</li>
+                            <li class="pull-right article-date">Last updated at: {{ article.updatedAt|date('D, d M Y') }}</li>
+                        </ol>
+                    </header>
+                    <hr>
+                    <section>
+                        {{ article.content|markdown }}
+                    </section>
+            </article>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,12 @@
+imports:
+    - { resource: services.yml }
+
+# Opifer Help Configuration
+#
+# In here you can specify of which bundles the manual markdown files are loaded
+# This way if you don't want the manual of a certain bundle in the CMS, just don't
+# specify it here.
+opifer_manual:
+    bundles:
+        - OpiferManualBundle
+        - OpiferCmsBundle

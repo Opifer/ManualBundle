@@ -1,0 +1,4 @@
+services:
+    opifer.manual.help_manager:
+        class: Opifer\ManualBundle\Manager\HelpManager
+        arguments: [%opifer_manual.bundles%, @service_container]

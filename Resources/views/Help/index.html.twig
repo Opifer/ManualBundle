@@ -1,0 +1,42 @@
+{% extends "OpiferCmsBundle::base.html.twig" %}
+
+{% block title %}Help List :: OpiferCMS{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-8 col-xs-offset-2">
+                <header class="clearfix">
+                    <h1>Opifer CMS User Manual</h1>
+
+                    <div class="form-group">
+                        <div class="input-group search-group">
+                            <input type="search" placeholder="Click to search" class="form-control"/>
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                </header>
+                <hr>
+                <div>
+                    <ul class="list-group">
+                        {% for category in categories %}
+                            <h2 class="help-category">{{ category.title }}</h2>
+                            <ul class="list-group">
+                                {% for article in category.articles %}
+                                    <li class="list-group-item">
+                                        <a href="{{  path('opifer.manual.help.show', { 'slug': article.slug }) }}">
+                                            {{ article.title }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endfor %}
+                    </ul>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

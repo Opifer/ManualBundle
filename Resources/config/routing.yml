@@ -1,0 +1,4 @@
+opifer.manual.help:
+    resource: '@OpiferManualBundle/Controller/HelpController.php'
+    type:     annotation
+    prefix:   /admin
