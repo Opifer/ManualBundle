@@ -1,0 +1,22 @@
+default:
+    extensions:
+        Behat\MinkExtension:
+            base_url: 'http://opifer.dev/app_test.php'
+            goutte: ~
+            selenium2:
+              wd_host: 127.0.0.1:8643/wd/hub
+#              wd_host: 127.0.0.1:4444/wd/hub
+        Behat\Symfony2Extension:
+        VIPSoft\DoctrineDataFixturesExtension\Extension:
+            lifetime:    feature
+            autoload:    false
+            directories:
+              - vendor/opifer/cms/src/Opifer/CmsBundle/DataFixtures/ORM
+
+    suites:
+        # OpiferManualBundle Behat configuration.
+        opifer_cms_help:
+            contexts:
+                - Opifer\ManualBundle\Features\Context\HelpContext
+            type: symfony_bundle
+            bundle: OpiferManualBundle
