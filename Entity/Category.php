@@ -11,7 +11,7 @@ use Opifer\ManualBundle\Entity\Article;
  *
  * @ORM\Table(name="help_category")
  * @ORM\HasLifecycleCallbacks
- * @ORM\Entity(repositoryClass="Opifer\ManualBundle\Entity\Repository\CategoryRepository")
+ * @ORM\Entity(repositoryClass="Opifer\ManualBundle\Repository\CategoryRepository")
  */
 class Category
 {

@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="help_article", indexes={@ORM\Index(columns={"title"}, name="search_idx")})
  * @ORM\HasLifecycleCallbacks
- * @ORM\Entity(repositoryClass="Opifer\ManualBundle\Entity\Repository\ArticleRepository")
+ * @ORM\Entity(repositoryClass="Opifer\ManualBundle\Repository\ArticleRepository")
  */
 class Article
 {
