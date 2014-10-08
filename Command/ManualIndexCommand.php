@@ -2,8 +2,6 @@
 
 namespace Opifer\ManualBundle\Command;
 
-use Opifer\ManualBundle\Entity\Article;
-use Opifer\ManualBundle\Entity\Category;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
