@@ -9,4 +9,4 @@ imports:
 opifer_manual:
     bundles:
         - OpiferManualBundle
-        - OpiferCmsBundle
+#        - OpiferCmsBundle
