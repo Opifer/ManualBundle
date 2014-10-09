@@ -3,10 +3,7 @@
 namespace Opifer\ManualBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HelpController extends Controller
@@ -15,15 +12,43 @@ class HelpController extends Controller
      * @Route("/help", name="opifer.manual.help.index", options={"expose"=true})
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @return Symfony\Component\HttpFoundation\Response
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function helpAction(Request $request)
     {
+        $search_form = $this->createFormBuilder()
+            ->add('search-field', 'search', ['required' => false])
+            ->add('search', 'submit')
+            ->getForm();
+
         $catRepo = $this->getDoctrine()->getRepository('OpiferManualBundle:Category');
         $categories = $catRepo->findAll();
 
-        return $this->render('OpiferManualBundle:Help:index.html.twig', [            
-            'categories' => $categories,
+        $search_form->handleRequest($request);
+        if ($request->isMethod('POST'))
+        {
+            $data = $search_form->getData();
+            $artRepo = $this->getDoctrine()->getRepository('OpiferManualBundle:Article');
+            $articles = $artRepo->getSearchedArticles($data[ 'search-field' ]);
+
+            if($data['search-field'] === '')
+            {
+                return $this->render('OpiferManualBundle:Help:index.html.twig', [
+                    'categories'  => $categories,
+                    'search_form' => $search_form->createView(),
+                ]);
+            }
+
+            return $this->render('OpiferManualBundle:Help:search.html.twig', [
+                'articles'    => $articles,
+                'search_form' => $search_form->createView(),
+            ]);
+        }
+
+        return $this->render('OpiferManualBundle:Help:index.html.twig', [
+            'categories'  => $categories,
+            'search_form' => $search_form->createView(),
         ]);
     }
 
@@ -31,7 +56,8 @@ class HelpController extends Controller
      * @Route("/help/{slug}", name="opifer.manual.help.show", options={"expose"=true})
      *
      * @param string $slug the slug use to get the article
-     * @return Symfony\Component\HttpFoundation\Response
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showArticleAction($slug)
     {

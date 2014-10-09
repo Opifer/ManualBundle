@@ -1,4 +1,5 @@
 {% extends "OpiferCmsBundle::base.html.twig" %}
+{% form_theme search_form "OpiferManualBundle:Form:field.html.twig" %}
 
 {% block title %}Help List{% endblock %}
 
@@ -17,6 +18,9 @@
                             </span>
                         </div>
                     </div>
+                    <form action="{{ path('opifer.manual.help.index') }}" method="post" {{ form_enctype(search_form) }}  class="search">
+                        {{ form_widget(search_form) }}
+                    </form>
                 </header>
                 <hr>
                 <div>

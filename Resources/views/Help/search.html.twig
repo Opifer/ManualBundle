@@ -1,0 +1,45 @@
+{% extends "OpiferCmsBundle::base.html.twig" %}
+
+{% block title %}Help Search{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-8 col-xs-offset-2">
+                <header class="clearfix">
+                    <h1>Opifer CMS User Manual</h1>
+
+                    {#<div class="form-group">#}
+                        {#<div class="input-group search-group">#}
+                            {#<input type="search" placeholder="Click to search" class="form-control"/>#}
+                            {#<span class="input-group-btn">#}
+                                {#<button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>#}
+                            {#</span>#}
+                        {#</div>#}
+                    {#</div>#}
+                    <form action="{{ path('opifer.manual.help.index') }}" method="post" {{ form_enctype(search_form) }}  class="search">
+                        {{ form_widget(search_form) }}
+                    </form>
+                </header>
+                <hr>
+                <div>
+                    <ul class="list-group">
+                        <ul class="list-group">
+                            <h2>Search Results </h2>
+                            <a href="{{ path('opifer.manual.help.index') }}" class="btn btn-default">Back to the list!</a>
+                            <br><br>
+                            {% for article in articles %}
+                                <li class="list-group-item">
+                                    <a href="{{  path('opifer.manual.help.show', { 'slug': article.slug }) }}">
+                                        {{ article.title }}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </ul>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
