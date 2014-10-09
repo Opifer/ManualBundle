@@ -1,6 +1,6 @@
 <?php
 
-namespace Opifer\ManualBundle\Entity\Repository;
+namespace Opifer\ManualBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 
