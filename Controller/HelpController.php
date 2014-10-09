@@ -29,17 +29,9 @@ class HelpController extends Controller
         if ($request->isMethod('POST'))
         {
             $data = $search_form->getData();
+            
             $artRepo = $this->getDoctrine()->getRepository('OpiferManualBundle:Article');
             $articles = $artRepo->getSearchedArticles($data[ 'search-field' ]);
-
-            if($data['search-field'] === '')
-            {
-                return $this->render('OpiferManualBundle:Help:index.html.twig', [
-                    'categories'  => $categories,
-                    'search_form' => $search_form->createView(),
-                ]);
-            }
-
             return $this->render('OpiferManualBundle:Help:search.html.twig', [
                 'articles'    => $articles,
                 'search_form' => $search_form->createView(),
