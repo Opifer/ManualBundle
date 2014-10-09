@@ -10,14 +10,14 @@
                 <header class="clearfix">
                     <h1>Opifer CMS User Manual</h1>
 
-                    <div class="form-group">
-                        <div class="input-group search-group">
-                            <input type="search" placeholder="Click to search" class="form-control"/>
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-                            </span>
-                        </div>
-                    </div>
+                    {#<div class="form-group">#}
+                        {#<div class="input-group search-group">#}
+                            {#<input type="search" placeholder="Click to search" class="form-control"/>#}
+                            {#<span class="input-group-btn">#}
+                                {#<button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>#}
+                            {#</span>#}
+                        {#</div>#}
+                    {#</div>#}
                     <form action="{{ path('opifer.manual.help.index') }}" method="post" {{ form_enctype(search_form) }}  class="search">
                         {{ form_widget(search_form) }}
                     </form>
