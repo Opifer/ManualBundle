@@ -38,6 +38,8 @@ class ManualIndexCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $output->writeln("<comment>Indexing the articles using database.</comment>");
+
         // Index the articles in the database
         $this->getContainer()->get('opifer.manual.help_manager')->indexArticles();
 
