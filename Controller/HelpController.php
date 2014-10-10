@@ -4,8 +4,19 @@ namespace Opifer\ManualBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class HelpController
+ *
+ * This is the controller responsible for the help functionality
+ * Please note that all routes defined in this bundle are prefixed by /admin
+ * This is set in Resources/config/routing.yml
+ *
+ * @package Opifer\ManualBundle\Controller
+ */
 class HelpController extends Controller
 {
     /**
@@ -17,31 +28,28 @@ class HelpController extends Controller
      */
     public function helpAction(Request $request)
     {
-        $search_form = $this->createFormBuilder()
-            ->add('search-field', 'search', ['required' => false])
-            ->add('search', 'submit')
-            ->getForm();
-
         $catRepo = $this->getDoctrine()->getRepository('OpiferManualBundle:Category');
         $categories = $catRepo->findAll();
 
-        $search_form->handleRequest($request);
-        if ($request->isMethod('POST'))
-        {
-            $data = $search_form->getData();
-            
-            $artRepo = $this->getDoctrine()->getRepository('OpiferManualBundle:Article');
-            $articles = $artRepo->getSearchedArticles($data[ 'search-field' ]);
-            return $this->render('OpiferManualBundle:Help:search.html.twig', [
-                'articles'    => $articles,
-                'search_form' => $search_form->createView(),
-            ]);
-        }
-
         return $this->render('OpiferManualBundle:Help:index.html.twig', [
             'categories'  => $categories,
-            'search_form' => $search_form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/help/search", name="opifer.manual.help.search", options={"expose"=true})
+     * @Method({"POST"})
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function searchAction()
+    {
+        $request = $this->get('request');
+        $searchQuery    = $request->request->get('searchForm');
+
+        $response = array ("responseCode" => 200, "search-query" => $searchQuery);
+        $response = json_encode($response);//json encode the array
+        return new Response($response, 200, array ('Content-Type' => 'application/json'));//make sure it has the correct content type
     }
 
     /**
