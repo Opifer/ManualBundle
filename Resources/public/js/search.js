@@ -4,7 +4,8 @@
 $(document).ready(function () {
     console.log("Document loaded");
     // Listen for the form being submitted
-    $("#searchForm").submit(function () {
+    //$("#searchForm").submit(function () {
+    $("#searchId").on("change keyup paste click", function(){
         var url = $("#searchForm").attr("action"); // Get the submit url for the form
         // Start send the post request
         $.post(url, {
@@ -27,11 +28,7 @@ $(document).ready(function () {
                             );
                         });
                 }
-                else if (data.responseCode === 400) // Search box empty
-                {
-                    // Set the error text if search box is empty and change the text color to be red.
-                    $('#searchResult').html(data.errorMessage).css("color", "red");
-                }
+
             }
         );
         return false; // We don't what the browser to submit the form
