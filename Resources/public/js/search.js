@@ -13,15 +13,23 @@ $(document).ready(function () {
             },
             function (data) { // The response is in the data variable
                 if (data.responseCode === 200) {
-                    $.each(data.searchResult, function (key, value) {
-                        $('#searchResult').html(value);
+                    var article = data.searchResult;
+                    $.each(eval(article), function (key, value) {
+                        //console.log(value.slug);
+                        $('#searchResult').html("\
+                        <a href=\" "+ Routing.generate('opifer.manual.help.show', { slug: value.slug }) +" \">\
+                           "+ value.title +"\
+                        </a>"
+                        );
+
+                        //$('#searchResult').html("YOU DID IT!!").css("color", "green");
+                        //{{  path('opifer.manual.help.show', { 'slug': article.slug }) }}
                     });
                 }
                 else if (data.responseCode === 400) // Search box empty
                 {
                     // Set the error text if search box is empty and change the text color to be red.
-                    $('#searchResult').html(data.errorMessage);
-                    $('#searchResult').css("color", "red");
+                    $('#searchResult').html(data.errorMessage).css("color", "red");
                 }
             }
         );
