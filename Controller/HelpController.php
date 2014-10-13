@@ -79,6 +79,11 @@ class HelpController extends Controller
         $articleRepo = $this->getDoctrine()->getRepository('OpiferManualBundle:Article');
         $article = $articleRepo->findOneBySlug($slug);
 
+        if(empty($article))
+        {
+            throw $this->createNotFoundException("No article found with slug: ". $slug);
+        }
+
         return $this->render('OpiferManualBundle:Help:showArticle.html.twig', [
             'article' => $article,
         ]);
