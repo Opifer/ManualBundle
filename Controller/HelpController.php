@@ -3,10 +3,11 @@
 namespace Opifer\ManualBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+
 
 /**
  * Class HelpController
@@ -22,17 +23,15 @@ class HelpController extends Controller
     /**
      * @Route("/help", name="opifer.manual.help.index", options={"expose"=true})
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function helpAction(Request $request)
+    public function helpAction()
     {
         $catRepo = $this->getDoctrine()->getRepository('OpiferManualBundle:Category');
         $categories = $catRepo->findAll();
 
         return $this->render('OpiferManualBundle:Help:index.html.twig', [
-            'categories'  => $categories,
+            'categories' => $categories,
         ]);
     }
 
@@ -40,16 +39,32 @@ class HelpController extends Controller
      * @Route("/help/search", name="opifer.manual.help.search", options={"expose"=true})
      * @Method({"POST"})
      *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function searchAction()
+    public function searchAction(Request $request)
     {
-        $request = $this->get('request');
-        $searchQuery    = $request->request->get('searchForm');
+        $searchQuery = $request->get('searchForm');
+        $artRepo = $this->getDoctrine()->getRepository('OpiferManualBundle:Article');
+        $serializer = $this->container->get('jms_serializer');
 
-        $response = array ("responseCode" => 200, "search-query" => $searchQuery);
-        $response = json_encode($response);//json encode the array
-        return new Response($response, 200, array ('Content-Type' => 'application/json'));//make sure it has the correct content type
+
+        // Set search result to be the serialized database entities it the search box is not empty
+        if ($searchQuery != "")
+        {
+            $searchResult = $artRepo->getSearchedArticles($searchQuery);
+            $searchResult = $serializer->serialize($searchResult, 'json'); // Serialized the entity
+            $response = array ("responseCode" => 200, "searchResult" => $searchResult);
+        }
+        // If it is empty, set an errorMessage
+        else
+        {
+            $response = array ("responseCode" => 400, "errorMessage" => "No entries found, try to enter some text.");
+        }
+
+        $response = json_encode($response); //json encode the array
+        return new Response($response, 200, array ('Content-Type' => 'application/json'));
     }
 
     /**
