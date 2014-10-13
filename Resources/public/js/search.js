@@ -13,13 +13,15 @@ $(document).ready(function () {
             },
             function (data) { // The response is in the data variable
                 if (data.responseCode === 200) {
-                    var article = data.searchResult;
-                    $.each(eval(article), function (key, value) {
-                        //console.log(value.slug);
-                        $('#searchResult').html("\
-                        <a href=\" "+ Routing.generate('opifer.manual.help.show', { slug: value.slug }) +" \">\
-                           "+ value.title +"\
-                        </a>"
+
+                    $.each(eval(data.searchResult), function (key, value) {
+                        console.log(value);
+                        $('#searchResult').append("\
+                            <li class=\"list-group-item\">\
+                                <a href=\" "+ Routing.generate('opifer.manual.help.show', { slug: value.slug }) +" \">\
+                                   "+ value.title +"\
+                                </a>\
+                            </li>"
                         );
 
                         //$('#searchResult').html("YOU DID IT!!").css("color", "green");
