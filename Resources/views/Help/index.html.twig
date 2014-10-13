@@ -1,5 +1,4 @@
 {% extends "OpiferCmsBundle::base.html.twig" %}
-{% form_theme search_form "OpiferManualBundle:Form:field.html.twig" %}
 
 {% block title %}Help List{% endblock %}
 
@@ -10,7 +9,7 @@
                 <header class="clearfix">
                     <h1>Opifer CMS User Manual</h1>
 
-                    <form id="searchForm" action="{{path('opifer.manual.help.search')}}" method="POST" class="form-group">
+                    <form id="searchForm" action="{{ path('opifer.manual.help.search') }}" method="POST" class="form-group">
                         <div class="input-group search-group">
                             <input type="search" name="search-input" id="searchId" placeholder="Click to search" class="form-control"/>
                             <span class="input-group-btn">
@@ -42,3 +41,8 @@
         </div>
     </div>
 {% endblock %}
+
+{#{% block javascripts %}#}
+    {#<script src="{{ asset('js/search.js') }}" type="text/javascript"></script>#}
+    {#{{ parent() }}#}
+{#{% endblock %}#}
