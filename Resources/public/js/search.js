@@ -12,21 +12,20 @@ $(document).ready(function () {
                 other: "attributes"
             },
             function (data) { // The response is in the data variable
-                if (data.responseCode === 200) {
+                // Clear the contents of the #searchResult div
+                $('#searchResult').empty();
 
-                    $.each(eval(data.searchResult), function (key, value) {
-                        console.log(value);
-                        $('#searchResult').append("\
+                if (data.responseCode === 200) {
+                        $('#searchResult').empty();
+                        $.each(eval(data.searchResult), function (key, value) {
+                            $('#searchResult').append("\
                             <li class=\"list-group-item\">\
                                 <a href=\" "+ Routing.generate('opifer.manual.help.show', { slug: value.slug }) +" \">\
                                    "+ value.title +"\
                                 </a>\
                             </li>"
-                        );
-
-                        //$('#searchResult').html("YOU DID IT!!").css("color", "green");
-                        //{{  path('opifer.manual.help.show', { 'slug': article.slug }) }}
-                    });
+                            );
+                        });
                 }
                 else if (data.responseCode === 400) // Search box empty
                 {
