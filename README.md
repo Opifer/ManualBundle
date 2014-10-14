@@ -22,7 +22,7 @@ public function registerBundles()
     $bundles = array(
         ...
         new \Opifer\ManualBundle\OpiferManualBundle(),
-        new Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),        
+        new \Symfony\Cmf\Bundle\RoutingBundle\CmfRoutingBundle(),        
         new \Knp\Bundle\MarkdownBundle\KnpMarkdownBundle(),
         ...
     );
