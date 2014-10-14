@@ -16,12 +16,15 @@ use Symfony\Component\HttpFoundation\Response;
  * Please note that all routes defined in this bundle are prefixed by /admin
  * This is set in Resources/config/routing.yml
  *
+ * The prefix route used by all the actions below:
+ * @Route("/admin/help")
+ *
  * @package Opifer\ManualBundle\Controller
  */
 class HelpController extends Controller
 {
     /**
-     * @Route("/help", name="opifer.manual.help.index", options={"expose"=true})
+     * @Route("/", name="opifer.manual.help.index", options={"expose"=true})
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -36,7 +39,7 @@ class HelpController extends Controller
     }
 
     /**
-     * @Route("/help/search", name="opifer.manual.help.search", options={"expose"=true})
+     * @Route("/search", name="opifer.manual.help.search", options={"expose"=true})
      * @Method({"POST"})
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -68,7 +71,7 @@ class HelpController extends Controller
     }
 
     /**
-     * @Route("/help/{slug}", name="opifer.manual.help.show", options={"expose"=true})
+     * @Route("/{slug}", name="opifer.manual.help.show", options={"expose"=true})
      *
      * @param string $slug the slug use to get the article
      *
