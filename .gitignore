@@ -1,2 +1,3 @@
 # Ignore the idea folder. This is used by PhpStorm
 .idea
+Resources/public/components/*
