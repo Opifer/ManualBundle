@@ -39,6 +39,6 @@ $(document).ready(function() {
             }
         }
     }).on('typeahead:selected', function (object, datum, data) {
-            document.location.href = Routing.generate('opifer.manual.help.show', {slug: data.slug})
+            document.location.href = Routing.generate('opifer.manual.help.show', {slug: datum.slug})
         });
 });
