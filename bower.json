@@ -1,6 +1,7 @@
 {
   "name": "opifer-manualbundle",
   "dependencies": {
-    "typeahead.js": "latest"
+    "typeahead.js": "latest",
+    "hogan": "latest"
   }
 }
