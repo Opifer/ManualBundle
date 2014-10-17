@@ -5,6 +5,7 @@ namespace Opifer\ManualBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -39,39 +40,44 @@ class HelpController extends Controller
     }
 
     /**
-     * @Route("/search", name="opifer.manual.help.search", options={"expose"=true})
-     * @Method({"POST"})
+     * Gets the articles based on a query which is passed from search.js
      *
+     * @Route("/search/{query}", name="opifer.manual.help.search", options={"expose"=true})
+     * @Method({"GET"})
+     *
+     * @param string                                    $query The query gotten from the search box
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function searchAction(Request $request)
+    public function searchAction($query ,Request $request)
     {
-        $searchQuery = $request->get('searchForm');
-        $artRepo = $this->getDoctrine()->getRepository('OpiferManualBundle:Article');
-        $serializer = $this->container->get('jms_serializer');
+        $repo = $this->getDoctrine()->getRepository("OpiferManualBundle:Article");
+        $result = $repo->getSearchedArticles($query);
 
-
-        // Set search result to be the serialized database entities it the search box is not empty
-        if ($searchQuery != "")
-        {
-            $searchResult = $artRepo->getSearchedArticles($searchQuery);
-            $searchResult = $serializer->serialize($searchResult, 'json'); // Serialized the entity
-            $response = array ("responseCode" => 200, "searchResult" => $searchResult);
-        }
-        // If it is empty, set an errorMessage
-        else
-        {
-            $response = array ("responseCode" => 400, "errorMessage" => "No entries found, try to enter some text.");
-        }
-
-        $response = json_encode($response); //json encode the array
-        return new Response($response, 200, array ('Content-Type' => 'application/json'));
+        return new JsonResponse($result);
     }
 
     /**
-     * @Route("/{slug}", name="opifer.manual.help.show", options={"expose"=true})
+     * @Route("/search", name="opifer.manual.help.search_all", options={"expose"=true})
+     * @Method({"GET"})
+     */
+    public function searchAllAction()
+    {
+        $artRepo = $this->getDoctrine()->getRepository('OpiferManualBundle:Article');
+        $serializer = $this->container->get('jms_serializer');
+
+        /** @noinspection PhpUnusedLocalVariableInspection */
+        $searchResult = $artRepo->findAll();
+        $searchResult = $serializer->serialize($searchResult, 'json');
+        $response = [$searchResult];
+        $responseCode = 200;
+
+        return new Response($response, $responseCode, ['Content-Type' => 'application/json']);
+    }
+
+    /**
+     * @Route("/show/{slug}", name="opifer.manual.help.show", options={"expose"=true})
      *
      * @param string $slug the slug use to get the article
      *

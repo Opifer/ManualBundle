@@ -45,16 +45,10 @@ class ArticleRepository extends EntityRepository
     {
         $query = $this->createQueryBuilder('a')
             ->where('a.title LIKE :title')
-            ->setParameter('title', '%'.$search_query.'%')
+            ->orWhere('a.content LIKE :content')
+            ->setParameters(['title' => '%'.$search_query.'%', 'content' => '%'.$search_query.'%']);
 
-//            ->andWhere('a.content LIKE :content')
-//            ->setParameters(new ArrayCollection([
-//                new Parameter('title', '%'.$search_query.'%'),
-//                new Parameter('content', '%'.$search_query.'%')
-//            ]))
-            ->getQuery();
-
-            return $query->getResult();
+            return $query->getQuery()->getArrayResult();
     }
 
     /**

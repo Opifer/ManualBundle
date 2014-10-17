@@ -1,35 +1,44 @@
 /**
- * Created by tomschillemans on 10/10/14.
+ * Created by tomschillemans.
  */
-$(document).ready(function () {
-    console.log("Document loaded");
-    // Listen for the form being submitted
-    //$("#searchForm").submit(function () {
-    $("#searchId").on("change keyup paste click", function () {
-        var url = $("#searchForm").attr("action"); // Get the submit url for the form
-        // Start send the post request
-        $.post(url, {
-                searchForm: $("#searchId").val(),
-                other: "attributes"
-            },
-            function (data) { // The response is in the data variable
-                // Clear the contents of the #searchResult div
-                $('#searchResult').empty();
+$(document).ready(function() {
+    console.log("The Document has been loaded!");
 
-                if (data.responseCode === 200) {
-                    $('#searchResult').empty();
-                    $.each(eval(data.searchResult), function (key, value) {
-                        $('#searchResult').append("\
-                        <li class=\"list-group-item\">\
-                            <a href=\" " + Routing.generate('opifer.manual.help.show', {slug: value.slug}) + " \">\
-                               " + value.title + "\
-                            </a>\
-                        </li>"
-                        );
-                    });
-                }
-            }
-        );
-        return false; // We don't what the browser to submit the form
+    var remoteUrl = Routing.generate('opifer.manual.help.search', { query: 'WILDCARD' });
+    var prefetchUrl = Routing.generate('opifer.manual.help.search_all');
+    var articles = new Bloodhound(
+    {
+        datumTokenizer: function (d) { return Bloodhound.tokenizers.whitespace(d.title); },
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        name: "search",
+        remote:
+        {
+            url: remoteUrl,
+            wildcard: 'WILDCARD'
+        }
     });
+
+    articles.initialize();
+
+    $('#searchfieldId').typeahead(
+        {
+            hint: true,
+            autoselect: true,
+            highlight: true,
+            minLength: 1
+        },
+        {
+        name: 'search',
+        displayKey: 'title',
+        source: articles.ttAdapter(),
+        templates:
+        {
+            empty: '<div class="tt-suggestion"><p>No articles found!</p></div>',
+            suggestion: function(data){
+                return '<p><a href="'+ Routing.generate('opifer.manual.help.show', {slug: data.slug}) +'">'+ data.title +'</a></p>';
+            }
+        }
+    }).on('typeahead:selected', function (object, datum, data) {
+            document.location.href = Routing.generate('opifer.manual.help.show', {slug: data.slug})
+        });
 });
