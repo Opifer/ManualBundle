@@ -35,6 +35,35 @@ public function registerBundles()
 }
 ```
 
+> **NOTE**  
+> If you use `opifer/cms` you do not need to do this!
+> You do however need to do the following and please make sure you have [bower](http://bower.io) installed
+> For the below mentioned steps we assume you have setup a database already and let symfony create it.
+
+Last of all, you need to use the command line to cd into the manual-bundle and do a `bower install`
+First, cd into the manual-bundle: 
+```bash
+    cd vendor/opifer/manual-bundle
+```
+
+Then, do:
+```bash
+    bower install
+```
+It will install all the things it needs to run!
+
+The last thing you need to do is:
+```bash
+    app/console opifer:refresh
+```
+This last command will install the necessary Help markdown files 
+which come with the bundle and all other bundles that have the above 
+mentioned folder structure. if you haven't setup a help structure for 
+your own bundle and you would like to do that, you need to re-run either 
+`app/console opifer:refresh` or `app/console opifer:manual:index`.
+I suggest you use the first one as it also re-installs the asset files and clears the cache!
+
+
 Using this bundle
 -----------------
 
