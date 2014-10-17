@@ -1,6 +1,6 @@
 {% extends "OpiferCmsBundle::base.html.twig" %}
 
-{% block title %}Help - {{ article.title }}{% endblock %}
+{% block title %}{{ article.title }} | {{ parent() }}{% endblock %}
 
 {% block body %}
     <div class="manual container">

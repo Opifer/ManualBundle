@@ -1,6 +1,6 @@
 {% extends "OpiferCmsBundle::base.html.twig" %}
 
-{% block title %}Help List{% endblock %}
+{% block title %}Help List | {{ parent() }}{% endblock %}
 
 {% block body %}
     <div class="container">
@@ -9,14 +9,14 @@
                 <header class="clearfix">
                     <h1>Opifer CMS User Manual</h1>
 
-                    <div class="form-group">
+                    <form id="searchForm" method="POST" class="form-group">
                         <div class="input-group search-group">
-                            <input type="search" placeholder="Click to search" class="form-control"/>
+                            <input type="text" name="search-input" id="searchfieldId" placeholder="Click to search." class="form-control typeahead" autofocus autocomplete="off"/>
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
                             </span>
                         </div>
-                    </div>
+                    </form>
                 </header>
                 <hr>
                 <div>

@@ -1,5 +1,5 @@
-Search Help Articles README
-===========================
+#Search Help Articles README
+
 
 ##Intro
 This read me shows you how the help article search feature works.
@@ -53,7 +53,7 @@ In those folders you need to place all the markdown files belonging to that cate
 The name of the markdown file will result in the name of that article.
 This means you can do something like: `My First Markdown file.md`.
 
-> NOTE: This follows the rule of file naming. The title can not consist characters which can not be put in a file name.
+> NOTE: This follows the rules of file naming. The title can not consist of characters which can't be put in a file name.
 
 ##Markdown Tips 'n Tricks
 Some tips and tricks on how to style your markdown file correctly.
@@ -61,3 +61,11 @@ Some tips and tricks on how to style your markdown file correctly.
 it is advised to only use either one of those per document as an `<h1></h1>` tag is used for a title.
 - As the title is the same as your file name and is printed on the article detail page it is advised to use a different 
 title in your markdown file.
+
+##Other Tips
+
+###Best Practices
+The guys at SensioLabs have created a Symfony best practices documentation
+Please take a look at it [Here](http://symfony.com/doc/current/best_practices/index.html).
+As the documentation states, you don't need to adopt these in excisting applications, but it is
+advised to used these best practices in new apps as it optimizes your Symfony application.

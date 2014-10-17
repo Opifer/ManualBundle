@@ -2,7 +2,9 @@
 
 namespace Opifer\ManualBundle\Repository;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Parameter;
 
 /**
  * HelpRepository
@@ -13,6 +15,8 @@ use Doctrine\ORM\EntityRepository;
 class ArticleRepository extends EntityRepository
 {
     /**
+     * Gets an article by a slug
+     *
      * @param $slug
      *
      * @return \Doctrine\ORM\Query returns the result from the query.
@@ -30,6 +34,27 @@ class ArticleRepository extends EntityRepository
         return $qb->getQuery()->getSingleResult();
     }
 
+    /**
+     * Gets all the articles by a search_query
+     *
+     * @param string $search_query the string the user inputs into search box
+     *
+     * @return array result of query.
+     */
+    function getSearchedArticles($search_query)
+    {
+        $query = $this->createQueryBuilder('a')
+            ->where('a.title LIKE :title')
+            ->setParameter('title', '%'.$search_query.'%');
+
+            return $query->getQuery()->getArrayResult();
+    }
+
+    /**
+     * Gets all articles
+     *
+     * @return array
+     */
     function getAllArticles()
     {
         $qb = $this->createQueryBuilder('a')
@@ -39,6 +64,13 @@ class ArticleRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * Gets all articles for a specific category
+     *
+     * @param $category_id
+     *
+     * @return array
+     */
     function getArticlesForCategory($category_id)
     {
         $qb = $this->createQueryBuilder('a')
