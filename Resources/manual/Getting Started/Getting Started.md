@@ -28,18 +28,18 @@ available in for the standard markdown.
 > This CMS only supports standard markdown.
 
 ##How to add manual items
-This CMS relies on a folder structure to load all the available markdown.
+This bundle relies on a folder structure to load all the available markdown.
 the default folder structure is as follows.
 ```
-Opifer
-    - ManualBundle
+Vendor
+    - MyBundle
         - Resources
             - manual
                 + File1
                 + File2
                 etc.
 ```
-Where Opifer is your vendor prefix and Manual is your bundle.
+Where *Vendor* is your vendor prefix and *MyBundle* is your bundle.
 The `-` are folders and the `+` are files.
 
 When you have that structure in place, add the bundles you want to load in:  
@@ -63,9 +63,13 @@ it is advised to only use either one of those per document as an `<h1></h1>` tag
 title in your markdown file.
 
 ##Other Tips
-
 ###Best Practices
 The guys at SensioLabs have created a Symfony best practices documentation
 Please take a look at it [Here](http://symfony.com/doc/current/best_practices/index.html).
-As the documentation states, you don't need to adopt these in excisting applications, but it is
+As the documentation states, you don't need to adopt these in existing applications, but it is
 advised to used these best practices in new apps as it optimizes your Symfony application.
+
+Also, if you want to create/edit markdown files from within a IDE or Sublime/Textmate for example, make sure you have `Strip whitespaces on end of line` turned **OFF** for .md files.
+This is because in Markdown having 2 whitespaces on the end of a line followed by an line break is the equivalent of a new line.
+If you don't have 2 spaces on the end of a line, the line underneath it will be wrapped to fill the content area. 
+So to force a line break, you **NEED** to have 2 spaces on the end of a line followed by a line break.
